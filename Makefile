@@ -9,7 +9,7 @@ all	:	$(NAME)
 
 .PHONY : all
 
-NAME	=	myftp
+NAME	=	myARPspoof
 
 
 CFLAGS	=	-Wall -Wextra -pedantic

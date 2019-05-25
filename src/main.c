@@ -30,20 +30,38 @@ void do_all(char **av, info_t *info)
    memcpy(info->my_mac_addr, me.ifr_hwaddr.sa_data, sizeof(int) * 6);
 }
 
+void print_cast(char **av)
+{
+    struct ifreq me;
+    info_t *info = malloc(sizeof(info_t));
+    info->socket = socket(AF_INET, SOCK_DGRAM, IPPROTO_IP);
+    info->sender_ip = strdup(av[1]);
+    info->target_ip = strdup(av[2]);
+    info->interface = strdup(av[3]);
+    info->my_mac_addr = malloc(sizeof(int) * 6);
+    memset(&me, 0, sizeof(me));
+    strncpy(me.ifr_name, info->interface, IFNAMSIZ);
+    ioctl(info->socket, SIOCGIFHWADDR, &me);
+    memcpy(info->my_mac_addr, me.ifr_hwaddr.sa_data, sizeof(int) * 6);
+    arp_t *arp = create_arp(info, BROADCAST);
+    printf("%02x ", (unsigned char) arp->target_mac_addr);
+    printf("%02x ", (unsigned char) arp->hardware_type);
+}
+
 int main(int ac, char **av)
 {
    info_t *info = malloc(sizeof(info_t));
    struct sockaddr_ll origin;
-   if (ac < 4 && ac > 6)
+   if (ac < 4 || ac > 6)
        exit(84);
    if (ac == 5) {
-       if (!strcmp(av[4], "printBroadcast"))
-           exit(0);
+       if (!strcmp(av[4], "--printBroadcast"))
+           print_cast(av);
        else
-           exit(8);
+           exit(84);
    }
    if (ac == 6) {
-       if (!strcmp(av[4], "printSpoof"))
+       if (!strcmp(av[4], "--printSpoof"))
            exit(0);
        else
            exit(84);
