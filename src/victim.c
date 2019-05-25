@@ -36,7 +36,6 @@ void victim_mac_address(info_t *info, struct sockaddr_ll *origin)
     uint8_t *victim_mac_addr = malloc(sizeof(uint8_t) * 6);
     while (1) {
         if (recvfrom(info->socket, buf, 65535, 0, NULL, NULL) <= 0) { 
-            printf("la");
             exit(84);
         }
         eth = (ethernet_t *)buf;

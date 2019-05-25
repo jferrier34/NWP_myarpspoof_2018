@@ -50,6 +50,8 @@ void print_cast(char **av)
         i++;
     }
     printf("%02x ", (unsigned char) arp->hardware_type);
+    printf("%02x ", (unsigned char) arp->protocol_type);
+
 }
 
 int main(int ac, char **av)
