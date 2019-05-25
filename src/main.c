@@ -33,6 +33,7 @@ void do_all(char **av, info_t *info)
 void print_cast(char **av)
 {
     struct ifreq me;
+    int i = 0;
     info_t *info = malloc(sizeof(info_t));
     info->socket = socket(AF_INET, SOCK_DGRAM, IPPROTO_IP);
     info->sender_ip = strdup(av[1]);
@@ -44,7 +45,10 @@ void print_cast(char **av)
     ioctl(info->socket, SIOCGIFHWADDR, &me);
     memcpy(info->my_mac_addr, me.ifr_hwaddr.sa_data, sizeof(int) * 6);
     arp_t *arp = create_arp(info, BROADCAST);
-    printf("%02x ", (unsigned char) arp->target_mac_addr);
+    while( i < 6) { 
+        printf("%02x ", (unsigned char) BROADCAST[1]);
+        i++;
+    }
     printf("%02x ", (unsigned char) arp->hardware_type);
 }
 
