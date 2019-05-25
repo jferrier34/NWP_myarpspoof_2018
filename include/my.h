@@ -24,6 +24,7 @@
 #include <unistd.h>
 #include <net/if.h>
 #include <net/ethernet.h>
+#include <linux/types.h>
 #define BROADCAST (uint8_t[6]){0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF}
 
    typedef struct ethernet_header_s
@@ -64,6 +65,7 @@ ethernet_t *create_ethernet(info_t *info,
 void spoof_victim(struct sockaddr_ll *origin, uint8_t *victim_mac_addr,
     info_t *info);
 void victim_mac_address(info_t *info, struct sockaddr_ll *origin);
+struct all_t *create_arpp(info_t *info, const uint8_t *dest_mac_addr);
 
 
 #endif /* !MY_H_ */
