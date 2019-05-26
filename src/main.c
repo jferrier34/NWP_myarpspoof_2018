@@ -54,7 +54,7 @@ void print_cast(char **av)
     unsigned char *arp_print = (unsigned char *) arp;
     for (unsigned int i = 0; i < sizeof(arp_t) - 1; i++)
         printf("%02x ", arp_print[i]);
-    printf("%02x\n", arp->sender_ip_addr[sizeof(arp_t) - 1]);
+    printf("%02x\n", arp->sender_ip_addr[sizeof(arp_t)]);
     exit(0);
 }
 
