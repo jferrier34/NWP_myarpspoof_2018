@@ -46,11 +46,9 @@ void print_cast(char **av)
     memcpy(info->my_mac_addr, me.ifr_hwaddr.sa_data, sizeof(int) * 6);
     arp_t *arp = create_arp(info, BROADCAST);
     ethernet_t *eth = create_ethernet (info, BROADCAST, arp);
-    for (int i = 0; i < 6; i++)
-        printf("%02x ", (unsigned char)eth->dest_mac_addr[i]);
-    for (int i = 0; i < 6; i++)
-        printf("%02x ", (unsigned char)eth->src_mac_addr[i]);
-    printf("%02x ", (unsigned char)eth->type);
+    unsigned char *eth_print = (unsigned char *) eth;
+    for (unsigned int i = 0; i < sizeof(ethernet_t); i++)
+        printf("%02x ", eth_print[i]);
     unsigned char *arp_print = (unsigned char *) arp;
     for (unsigned int i = 0; i < sizeof(arp_t) - 1; i++)
         printf("%02x ", arp_print[i]);
