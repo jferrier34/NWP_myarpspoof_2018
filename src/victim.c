@@ -21,7 +21,7 @@ void spoof_victim(struct sockaddr_ll *origin, uint8_t *victim_mac_addr,
     while (1) {
         if ((sendto(info->socket, eth, 42, 0,
             (const struct sockaddr *)origin, sizeof(*origin)) <= 0))
-                perror("sendto: ");
+                exit(84);
         printf("Spoofed packet send to '%s'\n", info->target_ip);
         sleep(1);
     }
@@ -35,7 +35,7 @@ void victim_mac_address(info_t *info, struct sockaddr_ll *origin)
     char buf[65535];
     uint8_t *victim_mac_addr = malloc(sizeof(uint8_t) * 6);
     while (1) {
-        if (recvfrom(info->socket, buf, 65535, 0, NULL, NULL) <= 0) { 
+        if (recvfrom(info->socket, buf, 65535, 0, NULL, NULL) <= 0) {
             exit(84);
         }
         eth = (ethernet_t *)buf;

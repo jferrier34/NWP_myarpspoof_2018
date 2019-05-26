@@ -5,7 +5,6 @@
 ** my
 */
 
-
 #ifndef MY_H_
 #define MY_H_
 
@@ -16,7 +15,7 @@
 #include <arpa/inet.h>
 #include <netinet/if_ether.h>
 #include <sys/socket.h>
-#include <net/ethernet.h> 
+#include <net/ethernet.h>
 #include <stdint.h>
 #include <sys/socket.h>
 #include <linux/if_packet.h>
@@ -66,6 +65,5 @@ void spoof_victim(struct sockaddr_ll *origin, uint8_t *victim_mac_addr,
     info_t *info);
 void victim_mac_address(info_t *info, struct sockaddr_ll *origin);
 struct all_t *create_arpp(info_t *info, const uint8_t *dest_mac_addr);
-
 
 #endif /* !MY_H_ */

@@ -12,7 +12,8 @@ void do_magic(struct sockaddr_ll *origin, info_t *info)
    arp_t *arp = create_arp(info, BROADCAST);
    ethernet_t *eth = create_ethernet(info, BROADCAST, arp);
    origin->sll_ifindex = if_nametoindex(info->interface);
-   sendto(info->socket, eth, 42, 0,(const struct sockaddr *)origin, sizeof(*origin));
+   sendto(info->socket, eth, 42, 0,
+   (const struct sockaddr *)origin, sizeof(*origin));
    victim_mac_address(info, origin);
 }
 
@@ -44,16 +45,17 @@ void print_cast(char **av)
     ioctl(info->socket, SIOCGIFHWADDR, &me);
     memcpy(info->my_mac_addr, me.ifr_hwaddr.sa_data, sizeof(int) * 6);
     arp_t *arp = create_arp(info, BROADCAST);
-    ethernet_t *eth = create_ethernet(info, BROADCAST, arp);
-    for(int i = 0; i < 6; i++)
+    ethernet_t *eth = create_ethernet (info, BROADCAST, arp);
+    for (int i = 0; i < 6; i++)
         printf("%02x ", (unsigned char)eth->dest_mac_addr[i]);
-    for(int i = 0; i < 6; i++)
+    for (int i = 0; i < 6; i++)
         printf("%02x ", (unsigned char)eth->src_mac_addr[i]);
     printf("%02x ", (unsigned char)eth->type);
     unsigned char *arp_print = (unsigned char *) arp;
     for (unsigned int i = 0; i < sizeof(arp_t) - 1; i++)
         printf("%02x ", arp_print[i]);
     printf("%02x\n", arp->sender_ip_addr[sizeof(arp_t) - 1]);
+    exit(0);
 }
 
 int main(int ac, char **av)
