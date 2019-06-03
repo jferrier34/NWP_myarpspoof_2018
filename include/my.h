@@ -26,7 +26,7 @@
 #include <linux/types.h>
 #define BROADCAST (uint8_t[6]){0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF}
 
-   typedef struct ethernet_header_s
+typedef struct ethernet_header_s
     {
         uint8_t dest_mac_addr[6];
         uint8_t src_mac_addr[6];
